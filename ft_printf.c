@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 06:42:45 by tdumouli          #+#    #+#             */
-/*   Updated: 2016/12/12 00:08:41 by tdumouli         ###   ########.fr       */
+/*   Updated: 2016/12/12 02:24:02 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,62 +14,46 @@
 #include <string.h>
 #include <unistd.h>
 #include "libft/libft.h"
+#include "printf.h"
 
-#include<stdio.h>
-#include<stdlib.h>
-
-int debut(const char *c, va_list va)
+static int	debut(const char *c, va_list va, t_list *off)
 {
-	if (*(c + 1) == '%')
-		write(1, "%", 1);
-	if (*(c + 1) == 'c')
-		ft_putchar(va_arg(va, int));
-	if (*(c + 1) == 's')
-		ft_putstr(va_arg(va, char *));
-	if (*(c + 1) == 'd')
-		ft_putnbr(va_arg(va, int));
-	if (*(c + 1) == 'p')
-		ft_putstr("0x");
-	if (*(c + 1) == 'p')
-		ft_putstr(ft_itoabase((va_arg(va,long int)), "0123456789abcdef"));
+	if (*(c) == '%')
+		add_chr('%', off);
+	if (*(c) == 'c')
+		add_chr(va_arg(va, int), off);
+	if (*(c) == 's')
+		add_str(va_arg(va, char *), off);
+	if (*(c) == 'd')
+		add_nbr(va_arg(va, int), off);
+	if (*(c) == 'p')
+		add_str("0x", off);
+	if (*(c) == 'p')
+		add_str(ft_itoabase((va_arg(va, long int)), "0123456789abcdef"), off);
+	if (*(c) == 'C')
+		stk_uni(va_arg(va, int), off);
+	if (*(c) == 'S')
+		uni_aff(va_arg(va, int*), off);
 	return (2);
 }
 
-int ft_printf(const char * format, ...)
+int			ft_printf(const char *format, ...)
 {
-	size_t len;
-	size_t start;
-	va_list va;
+	size_t	len;
+	va_list	va;
+	t_list	*off;
 
+	off = ft_lstnew("", BUFF_SIZE);
+	off->content_size = 0;
 	va_start(va, format);
-	len = 0;
-	start = 0;
-	while (*(len + start + format) != '\0')
+	len = -1;
+	while (*(++len + format) != '\0')
 	{
-		while (*(len + start + format) != '%' && *(len + start + format) != 0)
-			++len;
-		write(1, format + start, len);
-		if (*(format + start + len) == '%')
-			len += debut(format + start + len, va);
-		start += len;
-		len = 0;
+		if (*(format + len) == '%')
+			debut(format + (++len), va, off);
+		else
+			add_chr(*(len + format), off);
 	}
 	va_end(va);
 	return (0);
-}
-
-
-int main(void)
-{
-	char *a;
-	int *ui;
-//	int i = 51235;
-	ui = (int *)malloc(12);
-	a = (char *)malloc(1);
-	ui = L"123";
-	write(1, ui, 10);
-	write(1, "i \n", 3);
-ft_printf("gdf1g%%gg%c%d%s %d %p\n", 'a', 'a', "jhgfd", (int)a, a);
-printf("%d %ud\n", 'c', L'c' - 'c' - 1);
-return(-1 == printf("gdf1g%%gg%c%d%s %d %p i%Si %s\n", 'a', 'a', "jhgfd", (int)a, a, ui, "54"));
 }

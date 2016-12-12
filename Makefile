@@ -6,7 +6,7 @@
 #    By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 20:56:09 by tdumouli          #+#    #+#              #
-#    Updated: 2016/12/12 00:19:30 by tdumouli         ###   ########.fr        #
+#    Updated: 2016/12/12 02:52:18 by tdumouli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -I. -Wall -Werror -Wextra
 
 LIB = libft/libft.a
 
-SRC = ft_printf.c unicorn.c
+SRC = ft_printf.c unicorn.c maintest.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -33,6 +33,9 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+
+ffclean: fclean
+	make -C libft fclean
 
 re: fclean all
 
