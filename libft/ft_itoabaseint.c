@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoabase.c                                      :+:      :+:    :+:   */
+/*   ft_itoabaseint.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/28 16:12:14 by tdumouli          #+#    #+#             */
-/*   Updated: 2016/12/15 17:28:01 by tdumouli         ###   ########.fr       */
+/*   Created: 2016/12/15 05:05:40 by tdumouli          #+#    #+#             */
+/*   Updated: 2016/12/15 05:48:05 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-char	*ft_itoabase(unsigned long long int nb, char *b2)
+char	*ft_itoabaseint(unsigned int nb, char *b2)
 {
 	char				*ret;
 	unsigned long int	tmp;

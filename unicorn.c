@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 17:44:59 by tdumouli          #+#    #+#             */
-/*   Updated: 2016/12/12 02:24:16 by tdumouli         ###   ########.fr       */
+/*   Updated: 2016/12/15 17:47:18 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,23 @@ void			add_str(char *c, t_list *off)
 		add_chr(*c, off);
 }
 
+void add_nbr_unsigned(unsigned int n, t_list *off)
+{
+	char	i;
+
+	if (n == 0)
+	{
+		add_chr('0', off);
+		return ;
+	}
+	i = ft_unsignedintlen(n);
+	while (--i != -1)
+		add_chr('0' + n / ft_power(10, i) % 10, off);
+}
+
 void add_nbr(int n, t_list *off)
 {
-	int	i;
+	char	i;
 
 	if (n == 0)
 	{
@@ -53,18 +67,45 @@ void add_nbr(int n, t_list *off)
 		return ;
 	}
 	if (n < 0)
-	{
-		if (n == -2147483648)
-		{
-			add_str("-2147483648", off);
-			return ;
-		}
 		add_chr('-', off);
+	else
 		n = ~n + 1;
-	}
 	i = ft_intlen(n);
 	while (--i != -1)
-		add_chr(n / ft_power(10, i) % 10 + '0', off);
+		add_chr('0' - n / ft_power(10, i) % 10, off);
+}
+
+void	add_itoabase(long int nb, char *b2, t_list *off)
+{
+	unsigned long int	tmp;
+	int					skt;
+	size_t				size;
+	unsigned int		max;
+
+	if (!b2 && !*b2 && !*(b2 + 1))
+		return ;
+	size = 1;
+	tmp = nb;
+	skt = 0;
+	max = ft_strlen(b2);
+	while (tmp /= max)
+		++size;
+	while (--size + 1)
+	{
+		add_chr(*(b2 + (nb % max)), off);
+		nb /= max;
+	}
+}
+
+int			atoistr(char **s)
+{
+	int		ret;
+
+	--*s;
+	ret = 0;
+	while ('0' <= *(++*s) && **s <= '9')
+		ret = ret * 10 + (**s - '0');
+	return (ret);
 }
 
 void			stk_uni(unsigned int uni, t_list *off)

@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 05:36:48 by tdumouli          #+#    #+#             */
-/*   Updated: 2016/12/12 00:02:10 by tdumouli         ###   ########.fr       */
+/*   Updated: 2016/12/15 17:54:44 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ typedef struct	s_list
 
 int				ft_isspace(int c);
 int				ft_intlen(int n);
+int				ft_unsignedintlen(unsigned int n);
 int				ft_power(int n, int p);
 t_list			*ft_lstfind(const t_list *lst, void *data);
 t_list			*ft_lstfindsize(const t_list *lst, int data);
 t_list			*ft_lstothernew(size_t content_size);
 void			ft_lstaddend(t_list **alst, t_list *new);
+void			ft_erreur(char *str);
 
 void			*ft_memset(void *s, int v, size_t size);
 void			ft_bzero(void *s, size_t size);
@@ -89,7 +91,8 @@ void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void			ft_lstadd(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-char			*ft_itoabase(unsigned long int nb, char *b2);
+char			*ft_itoabase(unsigned long long int nb, char *b2);
+char			*ft_itoabaseint(unsigned int nb, char *b2);
 int				ft_atoibase(char *nb, char *b1);
 
 #endif

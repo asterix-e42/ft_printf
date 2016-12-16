@@ -6,7 +6,7 @@
 #    By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/08 16:51:40 by tdumouli          #+#    #+#              #
-#    Updated: 2016/12/12 01:08:45 by tdumouli         ###   ########.fr        #
+#    Updated: 2016/12/15 17:56:34 by tdumouli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,16 @@ SRCS = memset bzero memcpy memccpy memmove memchr memcmp strlen strdup strcpy \
 	   strequ strnequ strsub strjoin strtrim strsplit itoa putchar putstr \
 	   putendl putnbr putchar_fd putstr_fd putendl_fd putnbr_fd isspace \
 	   lstadd lstnew lstdel lstdelone lstiter lstmap intlen power lstfind \
-	   lstaddend lstfindsize lstothernew itoabase atoibase
+	   lstaddend lstfindsize lstothernew itoabase atoibase unsignedintlen \
+	   itoabaseint erreur
 
 SRC = $(addsuffix .c, $(addprefix ft_, $(SRCS))) 
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+all: $(OBJ)
+	
+anc: $(NAME) $(OBJ)
 
 $(NAME): $(OBJ)
 	@ar r $(NAME) $(OBJ)

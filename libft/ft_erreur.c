@@ -1,36 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_erreur.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/07 04:16:56 by tdumouli          #+#    #+#             */
-/*   Updated: 2016/12/15 08:01:56 by tdumouli         ###   ########.fr       */
+/*   Created: 2016/12/15 17:51:27 by tdumouli          #+#    #+#             */
+/*   Updated: 2016/12/15 17:55:51 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
-int			ft_atoi(const char *s)
+void ft_erreur(char *str)
 {
-	int		parcourt;
-	int		is_neg;
-	int		ret;
-
-	parcourt = -1;
-	is_neg = 1;
-	ret = 0;
-	while (ft_isspace(*(++parcourt + s)))
-		;
-	if (*(parcourt + s) == '-' || *(parcourt + s) == '+')
-	{
-		if (*(parcourt + s) == '-')
-			is_neg = -1;
-	}
-	else
-		parcourt--;
-	while ('0' <= *(++parcourt + s) && *(parcourt + s) <= '9')
-		ret = ret * 10 + (*(parcourt + s) - '0') * is_neg;
-	return (ret);
+	ft_putstr(str);
+	exit (EXIT_FAILURE);
 }
