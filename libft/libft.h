@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 05:36:48 by tdumouli          #+#    #+#             */
-/*   Updated: 2016/12/15 17:54:44 by tdumouli         ###   ########.fr       */
+/*   Updated: 2016/12/20 01:31:57 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef struct	s_list
 {
 	void			*content;
 	size_t			content_size;
+	size_t			size_tmp;
 	struct s_list	*next;
 }				t_list;
 

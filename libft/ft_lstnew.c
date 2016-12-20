@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/09 04:46:44 by tdumouli          #+#    #+#             */
-/*   Updated: 2016/11/11 11:13:34 by tdumouli         ###   ########.fr       */
+/*   Updated: 2016/12/20 01:32:46 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_list	*ft_lstnew(void const *conten, size_t content_siz)
 	if (!(ret = (t_list *)malloc(sizeof(t_list))))
 		return (NULL);
 	ret->next = NULL;
+	ret->size_tmp = 0;
 	if (!conten)
 	{
 		ret->content = NULL;

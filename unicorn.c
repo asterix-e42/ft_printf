@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 17:44:59 by tdumouli          #+#    #+#             */
-/*   Updated: 2016/12/15 17:47:18 by tdumouli         ###   ########.fr       */
+/*   Updated: 2016/12/20 05:12:46 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ static int		sizeofbit(int nb)
 void			add_chr(char c, t_list *off)
 {
 	((char *)off->content)[++(off->content_size)] = c;
-	print(off, 1);
+	if (off->content_size == 1024)
+		print(off, 1);
 }
 
 void			print(t_list *off, int fd)
 {
-	write(fd, off->content + off->content_size, 1);//f->content_size);
+	write(fd, off->content, off->content_size + 1);
+	off->size_tmp = off->content_size;
+	off->content_size = 0;
 }
 
 void			add_str(char *c, t_list *off)
@@ -57,7 +60,7 @@ void add_nbr_unsigned(unsigned int n, t_list *off)
 		add_chr('0' + n / ft_power(10, i) % 10, off);
 }
 
-void add_nbr(int n, t_list *off)
+void add_nbr(long long int n, t_list *off)
 {
 	char	i;
 
@@ -66,13 +69,13 @@ void add_nbr(int n, t_list *off)
 		add_chr('0', off);
 		return ;
 	}
-	if (n < 0)
+	if ((int)n < 0)
 		add_chr('-', off);
 	else
 		n = ~n + 1;
 	i = ft_intlen(n);
 	while (--i != -1)
-		add_chr('0' - n / ft_power(10, i) % 10, off);
+		add_chr('0' - (int)n / ft_power(10, i) % 10, off);
 }
 
 void	add_itoabase(long int nb, char *b2, t_list *off)
@@ -105,6 +108,7 @@ int			atoistr(char **s)
 	ret = 0;
 	while ('0' <= *(++*s) && **s <= '9')
 		ret = ret * 10 + (**s - '0');
+	--*s;
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 21:50:23 by tdumouli          #+#    #+#             */
-/*   Updated: 2016/12/15 18:15:19 by tdumouli         ###   ########.fr       */
+/*   Updated: 2016/12/20 03:14:44 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@
 # define FLAG_MAX 16
 # define FLAG_SIZE_T 32
 
+union u_size_of_type
+{
+	char c;
+};
+
 void			add_chr(char c, t_list *off);
 void			add_str(char *c, t_list *off);
 void			stk_uni(unsigned int uni, t_list *off);
 int				ft_printf(const char *format, ...);
 void			print(t_list *off, int fd);
-void			add_nbr(int nb, t_list *off);
+void			add_nbr(long long int nb, t_list *off);
 void			add_nbr_unsigned(unsigned int nb, t_list *off);
 void			uni_aff(int *uni, t_list *off);
 void			add_itoabase(long int b, char *c, t_list *off);
