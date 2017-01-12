@@ -34,9 +34,9 @@ void			add_chr(char c, t_list *off)
 
 void			print(t_list *off, int fd)
 {
-	write(fd, off->content, off->content_size + 1);
-	off->size_tmp = off->content_size;
-	off->content_size = 0;
+	write(fd, ((t_data_printf *)off->content)->txt, ((t_data_printf *)off->content)->size + 1);
+	((t_data_printf *)off->content)->tmp = ((t_data_printf *)off->content)->size;
+	((t_data_printf *)off->content)->size = 0;
 }
 
 void			add_str(char *c, t_list *off)
@@ -55,7 +55,7 @@ void add_nbr_unsigned(unsigned int n, t_list *off)
 		add_chr('0', off);
 		return ;
 	}
-	i = ft_unsignedintlen(n);
+	i = ft_intlen(n);
 	while (--i != -1)
 		add_chr('0' + n / ft_power(10, i) % 10, off);
 }
@@ -81,7 +81,7 @@ void add_nbr(long long int n, t_list *off)
 void	add_itoabase(long int nb, char *b2, t_list *off)
 {
 	unsigned long int	tmp;
-	int					skt;
+//	int					skt;
 	size_t				size;
 	unsigned int		max;
 
@@ -89,7 +89,7 @@ void	add_itoabase(long int nb, char *b2, t_list *off)
 		return ;
 	size = 1;
 	tmp = nb;
-	skt = 0;
+//	skt = 0;
 	max = ft_strlen(b2);
 	while (tmp /= max)
 		++size;

@@ -29,6 +29,13 @@
 # define FLAG_MAX 16
 # define FLAG_SIZE_T 32
 
+typedef struct	s_data_printf
+{
+	int	size;
+	char	*txt;
+	int	tmp;
+}		t_data_printf;
+
 union u_size_of_type
 {
 	char c;
@@ -44,5 +51,6 @@ void			add_nbr_unsigned(unsigned int nb, t_list *off);
 void			uni_aff(int *uni, t_list *off);
 void			add_itoabase(long int b, char *c, t_list *off);
 int				atoistr(char **s);
+t_data_printf		*new_data(void);
 
 #endif

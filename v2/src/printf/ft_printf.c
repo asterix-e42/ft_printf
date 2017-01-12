@@ -115,8 +115,8 @@ int			ft_printf(const char *format, ...)
 	va_list	va;
 	t_list	*off;
 
-	off = ft_lstnew("", BUFF_SIZE);
-	off->content_size = 0;
+	off = ft_lstnew("", sizeof(t_data_printf));
+	off->content = (void *)new_data();
 	va_start(va, format);
 	len = -1;
 	while (*(++len + format) != '\0')
@@ -128,5 +128,5 @@ int			ft_printf(const char *format, ...)
 	}
 	va_end(va);
 	print(off, 1);
-	return (off->content_size + off->size_tmp);
+	return (((t_data_printf *)off->content)->size + ((t_data_printf *)off->content)->tmp);
 }
