@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 06:42:45 by tdumouli          #+#    #+#             */
-/*   Updated: 2017/01/06 08:48:25 by tdumouli         ###   ########.fr       */
+/*   Updated: 2017/01/13 09:22:32 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void def_flag(char **c, char *flag, int *size, int *prec)
 		}
 }
 
-static int	debut(char *c, va_list va, t_list *off)
+static int	debut(char *c, va_list va, t_data_printf *off)
 {
 	char	flag[2];
 	char	*tmp;
@@ -111,12 +111,11 @@ static int	debut(char *c, va_list va, t_list *off)
 
 int			ft_printf(const char *format, ...)
 {
-	size_t	len;
-	va_list	va;
-	t_list	*off;
+	size_t			len;
+	va_list			va;
+	t_data_printf	*off;
 
-	off = ft_lstnew("", sizeof(t_data_printf));
-	off->content = (void *)new_data();
+	off = (void *)new_data();
 	va_start(va, format);
 	len = -1;
 	while (*(++len + format) != '\0')
@@ -128,5 +127,5 @@ int			ft_printf(const char *format, ...)
 	}
 	va_end(va);
 	print(off, 1);
-	return (((t_data_printf *)off->content)->size + ((t_data_printf *)off->content)->tmp);
+	return (off->size +off->tmp);
 }

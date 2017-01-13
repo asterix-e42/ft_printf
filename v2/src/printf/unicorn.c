@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 17:44:59 by tdumouli          #+#    #+#             */
-/*   Updated: 2017/01/06 08:01:26 by tdumouli         ###   ########.fr       */
+/*   Updated: 2017/01/13 09:21:07 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "printf.h"
-
+#include<stdio.h>
 static int		sizeofbit(int nb)
 {
 	int		i;
@@ -25,28 +25,29 @@ static int		sizeofbit(int nb)
 	return (i);
 }
 //fonction non complete
-void			add_chr(char c, t_list *off)
+void			add_chr(char c, t_data_printf *off)
 {
-	((char *)off->content)[++(off->content_size)] = c;
-	if (off->content_size == 1024)
+	(off->txt)[(off->size)] = c;
+	++(off->size);
+	if (off->size == 1024)
 		print(off, 1);
 }
 
-void			print(t_list *off, int fd)
+void			print(t_data_printf *off, int fd)
 {
-	write(fd, ((t_data_printf *)off->content)->txt, ((t_data_printf *)off->content)->size + 1);
-	((t_data_printf *)off->content)->tmp = ((t_data_printf *)off->content)->size;
-	((t_data_printf *)off->content)->size = 0;
+	write(fd, off->txt, off->size + 1);
+	off->tmp = off->size;
+	off->size = 0;
 }
 
-void			add_str(char *c, t_list *off)
+void			add_str(char *c, t_data_printf *off)
 {
 	--c;
 	while (*(++c))
 		add_chr(*c, off);
 }
 
-void add_nbr_unsigned(unsigned int n, t_list *off)
+void add_nbr_unsigned(unsigned int n, t_data_printf *off)
 {
 	char	i;
 
@@ -60,7 +61,7 @@ void add_nbr_unsigned(unsigned int n, t_list *off)
 		add_chr('0' + n / ft_power(10, i) % 10, off);
 }
 
-void add_nbr(long long int n, t_list *off)
+void add_nbr(long long int n, t_data_printf *off)
 {
 	char	i;
 
@@ -78,7 +79,7 @@ void add_nbr(long long int n, t_list *off)
 		add_chr('0' - (int)n / ft_power(10, i) % 10, off);
 }
 
-void	add_itoabase(long int nb, char *b2, t_list *off)
+void	add_itoabase(long int nb, char *b2, t_data_printf *off)
 {
 	unsigned long int	tmp;
 //	int					skt;
@@ -112,7 +113,7 @@ int			atoistr(char **s)
 	return (ret);
 }
 
-void			stk_uni(unsigned int uni, t_list *off)
+void			stk_uni(unsigned int uni, t_data_printf *off)
 {
 	char		n;
 
@@ -138,7 +139,7 @@ void			stk_uni(unsigned int uni, t_list *off)
 		add_chr(uni, off);
 }
 
-void			uni_aff(int *uni, t_list *off)
+void			uni_aff(int *uni, t_data_printf *off)
 {
 	--uni;
 	while (*(++uni))

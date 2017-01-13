@@ -6,7 +6,7 @@
 #    By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/08 16:51:40 by tdumouli          #+#    #+#              #
-#    Updated: 2017/01/06 08:00:35 by tdumouli         ###   ########.fr        #
+#    Updated: 2017/01/13 07:14:26 by tdumouli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,12 +24,12 @@ SRCS =	memset.o bzero.o memcpy.o memccpy.o memmove.o memchr.o memcmp.o \
 		strmap.o strmapi.o strequ.o strnequ.o strsub.o strjoin.o strtrim.o \
 		strsplit.o itoa.o putchar.o putstr.o putendl.o putnbr.o putchar_fd.o \
 		putstr_fd.o putendl_fd.o putnbr_fd.o isspace.o intlen.o power.o \
-		atoibase.o unsignedintlen.o erreur.o itoabaseint.o
+		atoibase.o unsignedintlen.o erreur.o itoabaseint.o itoabase.o
 
 LST =	lstadd.o lstnew.o lstdel.o lstdelone.o lstiter.o lstmap.o lstfind.o \
 		lstaddend.o	lstfindsize.o lstothernew.o 
 
-PRINT =	ft_printf.o unicorn.o
+PRINT =	ft_printf.o unicorn.o new_data.o
 
 OBJ=	$(addprefix $(OBJDIR)/libc/ft_, $(SRCS)) \
 		$(addprefix $(OBJDIR)/liste/ft_, $(LST)) \
@@ -57,8 +57,8 @@ $(OBJDIR):
 	@mkdir $(OBJDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-	@echo $(GREEN)"objets compile"$(NO_COLOR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo $(GREEN)$@" compile"$(NO_COLOR)
 
 $(NAME): $(OBJ)
 	@ar r $(NAME) $(OBJ)
@@ -79,8 +79,8 @@ cleanv:
 else
 cleanv:
 	@echo $(RED)"il ya probleme"
-	@echo $(YELLOW)$(shell echo | find . -typr f | grep "\.o" | cat -e)
-	make -d
+	@echo $(YELLOW)$(shell echo | find . -type f | grep "\.o" | cat -e)
+	reak
 endif
 
 cl:

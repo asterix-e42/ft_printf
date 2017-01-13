@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 21:50:23 by tdumouli          #+#    #+#             */
-/*   Updated: 2017/01/06 07:52:23 by tdumouli         ###   ########.fr       */
+/*   Updated: 2017/01/13 08:40:17 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,21 @@
 
 typedef struct	s_data_printf
 {
-	int	size;
-	char	*txt;
-	int	tmp;
+	int			size;
+	char		*txt;
+	int			tmp;
 }		t_data_printf;
 
-union u_size_of_type
-{
-	char c;
-};
-
-void			add_chr(char c, t_list *off);
-void			add_str(char *c, t_list *off);
-void			stk_uni(unsigned int uni, t_list *off);
+void			add_chr(char c, t_data_printf *off);
+void			add_str(char *c, t_data_printf *off);
+void			stk_uni(unsigned int uni, t_data_printf *off);
 int				ft_printf(const char *format, ...);
-void			print(t_list *off, int fd);
-void			add_nbr(long long int nb, t_list *off);
-void			add_nbr_unsigned(unsigned int nb, t_list *off);
-void			uni_aff(int *uni, t_list *off);
-void			add_itoabase(long int b, char *c, t_list *off);
+void			print(t_data_printf *off, int fd);
+void			add_nbr(long long int nb, t_data_printf *off);
+void			add_nbr_unsigned(unsigned int nb, t_data_printf *off);
+void			uni_aff(int *uni, t_data_printf *off);
+void			add_itoabase(long int b, char *c, t_data_printf *off);
 int				atoistr(char **s);
-t_data_printf		*new_data(void);
+t_data_printf	*new_data(void);
 
 #endif
