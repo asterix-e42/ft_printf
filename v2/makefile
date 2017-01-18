@@ -6,7 +6,7 @@
 #    By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/08 16:51:40 by tdumouli          #+#    #+#              #
-#    Updated: 2017/01/13 07:14:26 by tdumouli         ###   ########.fr        #
+#    Updated: 2017/01/18 01:34:04 by tdumouli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRCS =	memset.o bzero.o memcpy.o memccpy.o memmove.o memchr.o memcmp.o \
 LST =	lstadd.o lstnew.o lstdel.o lstdelone.o lstiter.o lstmap.o lstfind.o \
 		lstaddend.o	lstfindsize.o lstothernew.o 
 
-PRINT =	ft_printf.o unicorn.o new_data.o
+PRINT =	ft_printf.o unicorn.o new_data.o conversion2.o conversion.o tabconv.o\
+		gestioncarac.o gestionnombre.o symbol.o
 
 OBJ=	$(addprefix $(OBJDIR)/libc/ft_, $(SRCS)) \
 		$(addprefix $(OBJDIR)/liste/ft_, $(LST)) \

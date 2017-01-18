@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 21:50:23 by tdumouli          #+#    #+#             */
-/*   Updated: 2017/01/13 08:40:17 by tdumouli         ###   ########.fr       */
+/*   Updated: 2017/01/18 01:32:33 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PRINTF_H
 
 #include "libft.h"
+#include <stdarg.h>
 
 # define BUFF_SIZE 1024
 # define FLAG_DIESE 1
@@ -36,6 +37,19 @@ typedef struct	s_data_printf
 	int			tmp;
 }		t_data_printf;
 
+typedef struct	s_flag
+{
+	char		*format;
+	char		flagtype;
+	char		flagother;
+	int			precision1;
+	int			precision2;
+	int			precision3;
+}		t_flag;
+
+char			def_flag_type(va_list va, t_data_printf *off, t_flag *flag);
+int				sizeofbit(int);
+char			def_flag(va_list va, t_data_printf *off, t_flag *flag);
 void			add_chr(char c, t_data_printf *off);
 void			add_str(char *c, t_data_printf *off);
 void			stk_uni(unsigned int uni, t_data_printf *off);
@@ -47,5 +61,17 @@ void			uni_aff(int *uni, t_data_printf *off);
 void			add_itoabase(long int b, char *c, t_data_printf *off);
 int				atoistr(char **s);
 t_data_printf	*new_data(void);
+t_flag			*new_flag(char *);
+
+void			init(char(* tabprint[127])(va_list, t_data_printf *, t_flag *));
+char			symbol_a(va_list va, t_data_printf *off, t_flag *);
+char			letre_c(va_list va, t_data_printf *off, t_flag *);
+char			letre_s(va_list va, t_data_printf *off, t_flag *);
+char			letre_id(va_list va, t_data_printf *off, t_flag *);
+char			letre_x(va_list va, t_data_printf *off, t_flag *);
+char			letre_p(va_list va, t_data_printf *off, t_flag *);
+char			letre_mx(va_list va, t_data_printf *off, t_flag *);
+char			letre_moo(va_list va, t_data_printf *off, t_flag *);
+char			letre_mdu(va_list va, t_data_printf *off, t_flag *);
 
 #endif

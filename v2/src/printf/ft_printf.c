@@ -6,7 +6,7 @@
 /*   By: tdumouli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 06:42:45 by tdumouli          #+#    #+#             */
-/*   Updated: 2017/01/13 09:22:32 by tdumouli         ###   ########.fr       */
+/*   Updated: 2017/01/18 02:08:52 by tdumouli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,97 +16,64 @@
 #include "libft.h"
 #include "printf.h"
 
-int def_flag_type(char **c, char *flag)
+char		def_flag_type(va_list va, t_data_printf *off, t_flag *flag)
 {
-	char flagstp;
-	flagstp = 1;
-	while (flagstp && *(++(*c)))
-		if (**c == 'l')
-			if (!(*flag & FLAG_LONG))
-				*flag |= FLAG_LONG;
-			else
-				*flag |= FLAG_LONGLONG;
-		else if (**c == 'h')
-			if (!(*flag & FLAG_SHORT))
-				*flag |= FLAG_SHORT;
-			else
-				*flag |= FLAG_CHAR;
-		else if (**c == 'j')
-			*flag |= FLAG_MAX;
-		else if (**c == 'z')
-			*flag |= FLAG_SIZE_T;
+	(void)va;
+	(void)off;
+	if (*(flag->format) == 'l')
+		if (!((flag->flagtype) & FLAG_LONG))
+			(flag->flagtype) = FLAG_LONG;
 		else
-		{
-			flagstp = 0;
-			return(1);
-		}
-	return(0);
+			(flag->flagtype) = FLAG_LONGLONG;
+	else if (*(flag->format) == 'h')
+		if (!((flag->flagtype) & FLAG_SHORT))
+			(flag->flagtype) = FLAG_SHORT;
+		else
+			(flag->flagtype) = FLAG_CHAR;
+	else if (*(flag->format) == 'j')
+		(flag->flagtype) = FLAG_MAX;
+	else if (*(flag->format) == 'z')
+		(flag->flagtype) = FLAG_SIZE_T;
+	else
+		ft_erreur("imposible");
+	++(flag->format);
+	return (1);
 }
 
-void def_flag(char **c, char *flag, int *size, int *prec)
+char		def_flag(va_list va, t_data_printf *off, t_flag *flag)
 {
-	char flagstp;
-
-	flagstp = 1;
-	--(*c);
-	while (flagstp)
-		if (def_flag_type(c, flag + 1))
-		{
-			if (**c == '#')
-				*flag |= FLAG_DIESE;
-			else if (ft_isdigit(**c) || (**c == '.' && *prec == 0 && *(++(*c))))
-				*size = atoistr(c);
-			else if ((**c == '0' || **c == '.') && *(++(*c)))
-				*prec = atoistr(&(*c));
-			else if (**c == '-')
-				*flag |= FLAG_MOIN;
-			else if (**c == '+')
-				*flag |= FLAG_PLUS;
-			else if (**c == ' ')
-				*flag |= FLAG_SPACE;
-			else
-				flagstp = 0;
-		}
+	(void)va;
+	(void)off;
+	if (*(flag->format) == '#')
+		(flag->flagother) |= FLAG_DIESE;
+	else if (*(flag->format) == 0)
+		(flag->precision1) = atoistr(&(flag->format));
+	else if (ft_isdigit(*(flag->format)))
+		(flag->precision2) = atoistr(&(flag->format));
+	else if (*(flag->format) == '.' && ++*(flag->format))
+		(flag->precision3) = atoistr(&(flag->format));
+	else if (*(flag->format) == '-')
+		(flag->flagother) |= FLAG_MOIN;
+	else if (*(flag->format) == '+')
+		(flag->flagother) |= FLAG_PLUS;
+	else if (*(flag->format) == ' ')
+		(flag->flagother) |= FLAG_SPACE;
+	else
+		ft_erreur("imposibl");
+	++(flag->format);
+	return (1);
 }
 
 static int	debut(char *c, va_list va, t_data_printf *off)
 {
-	char	flag[2];
-	char	*tmp;
-	int		size;
-	int		precision;
+	t_flag			*flag;
+	static char		(*tabprintf[127])(va_list va, t_data_printf *, t_flag *);
 
-	*flag = 0;
-	flag[1] = 0;
-	precision = 0;
-	tmp = c;
-	def_flag(&c, flag, &size, &precision);
-	if (*(c) == '%')
-		add_chr('%', off);
-	else if (*(c) == 'c')
-		add_chr(va_arg(va, int), off);
-	else if (*(c) == 's')
-		add_str(va_arg(va, char *), off);
-	else if (*(c) == 'd' || *(c) == 'i')
-		add_nbr(va_arg(va, int), off);
-	else if (*(c) == 'x')
-		add_str(ft_itoabaseint(va_arg(va, int), "0123456789abcdef"), off);
-	else if (*(c) == 'p')
-	{
-		add_str("0x", off);
-		add_str(ft_itoabase(va_arg(va, long int), "0123456789abcdef"), off);
-	}
-	else if (*(c) == 'X')
-		add_str(ft_itoabaseint(va_arg(va, int), "0123456789ABCDEF"), off);
-	else if (*(c) == 'o' || *(c) == 'O')
-		add_str(ft_itoabaseint(va_arg(va, int), "01234567"), off);
-	else if (*(c) == 'C')
-		stk_uni(va_arg(va, int), off);
-	else if (*(c) == 'S')
-		uni_aff(va_arg(va, int*), off);
-	else if (*(c) == 'D' || *(c) == 'u')
-		add_nbr_unsigned(va_arg(va, unsigned int), off);
-	return (c - tmp + 1);
+	init(tabprintf);
+	flag = new_flag(c);
+	while (tabprintf[(int)*(flag->format)](va, off, flag))
+		;
+	return (flag->format - c + 1);
 }
 
 int			ft_printf(const char *format, ...)
@@ -127,5 +94,5 @@ int			ft_printf(const char *format, ...)
 	}
 	va_end(va);
 	print(off, 1);
-	return (off->size +off->tmp);
+	return (off->size + off->tmp);
 }
