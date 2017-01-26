@@ -36,8 +36,7 @@ t_flag			*new_flag(char *format)
 	ret->format = format;
 	ret->flagtype = 0;
 	ret->flagother = 0;
-	ret->precision1 = 0;
-	ret->precision2 = 0;
-	ret->precision3 = 0;
+	ret->precision = 0;
+	ret->width = 0;
 	return (ret);
 }

@@ -13,7 +13,6 @@
 #include <unistd.h>
 #include <string.h>
 #include "libft.h"
-#include <math.h>
 
 int		ft_atoibase(char *nb, char *b1)
 {
@@ -35,7 +34,7 @@ int		ft_atoibase(char *nb, char *b1)
 		while (*(++ret) != *(nb + tmp))
 			if (!*(ret))
 				return (0);
-		skt += (int)(ret - b1) * pow(size, max - tmp);
+		skt += (int)(ret - b1) * ft_power(size, max - tmp);
 	}
 	return (skt);
 }

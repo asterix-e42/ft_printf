@@ -15,6 +15,7 @@
 
 #include "libft.h"
 #include <stdarg.h>
+#include <stdint.h>
 
 # define BUFF_SIZE 1024
 # define FLAG_DIESE 1
@@ -42,9 +43,8 @@ typedef struct	s_flag
 	char		*format;
 	char		flagtype;
 	char		flagother;
-	int			precision1;
-	int			precision2;
-	int			precision3;
+	unsigned int			precision;
+	unsigned int			width;
 }		t_flag;
 
 char			def_flag_type(va_list va, t_data_printf *off, t_flag *flag);
@@ -55,7 +55,7 @@ void			add_str(char *c, t_data_printf *off);
 void			stk_uni(unsigned int uni, t_data_printf *off);
 int				ft_printf(const char *format, ...);
 void			print(t_data_printf *off, int fd);
-void			add_nbr(long long int nb, t_data_printf *off);
+void			add_nbr(intmax_t nb, t_data_printf *off);
 void			add_nbr_unsigned(unsigned int nb, t_data_printf *off);
 void			uni_aff(int *uni, t_data_printf *off);
 void			add_itoabase(long int b, char *c, t_data_printf *off);

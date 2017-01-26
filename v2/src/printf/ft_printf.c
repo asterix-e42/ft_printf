@@ -35,7 +35,7 @@ char		def_flag_type(va_list va, t_data_printf *off, t_flag *flag)
 	else if (*(flag->format) == 'z')
 		(flag->flagtype) = FLAG_SIZE_T;
 	else
-		ft_erreur("imposible");
+		ft_erreur("imposible\n");
 	++(flag->format);
 	return (1);
 }
@@ -46,20 +46,18 @@ char		def_flag(va_list va, t_data_printf *off, t_flag *flag)
 	(void)off;
 	if (*(flag->format) == '#')
 		(flag->flagother) |= FLAG_DIESE;
-	else if (*(flag->format) == 0)
-		(flag->precision1) = atoistr(&(flag->format));
-	else if (ft_isdigit(*(flag->format)))
-		(flag->precision2) = atoistr(&(flag->format));
-	else if (*(flag->format) == '.' && ++*(flag->format))
-		(flag->precision3) = atoistr(&(flag->format));
 	else if (*(flag->format) == '-')
 		(flag->flagother) |= FLAG_MOIN;
 	else if (*(flag->format) == '+')
 		(flag->flagother) |= FLAG_PLUS;
 	else if (*(flag->format) == ' ')
 		(flag->flagother) |= FLAG_SPACE;
+	else if (*(flag->format) == '0')
+		(flag->flagother) |= FLAG_ZERO;
+	else if (ft_isdigit(*(flag->format)))
+		(flag->flagother) |= FLAG_ZERO;
 	else
-		ft_erreur("imposibl");
+		ft_erreur("imposibl\n");
 	++(flag->format);
 	return (1);
 }

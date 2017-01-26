@@ -29,12 +29,17 @@ SRCS =	memset.o bzero.o memcpy.o memccpy.o memmove.o memchr.o memcmp.o \
 LST =	lstadd.o lstnew.o lstdel.o lstdelone.o lstiter.o lstmap.o lstfind.o \
 		lstaddend.o	lstfindsize.o lstothernew.o 
 
-PRINT =	ft_printf.o unicorn.o new_data.o conversion2.o conversion.o tabconv.o\
-		gestioncarac.o gestionnombre.o symbol.o
+PRINT =	ft_printf.o unicorn.o new_data.o tabconv.o gestioncarac.o gestionnombre.o\
+		conversion/symbol.o conversion/letre_c.o conversion/letre_s.o\
+		conversion/letre_id.o conversion/letre_mdu.o conversion/letre_moo.o\
+		conversion/letre_mx.o	conversion/letre_p.o conversion/letre_s.o\
+		conversion/letre_x.o
 
 OBJ=	$(addprefix $(OBJDIR)/libc/ft_, $(SRCS)) \
 		$(addprefix $(OBJDIR)/liste/ft_, $(LST)) \
 		$(addprefix $(OBJDIR)/printf/, $(PRINT))
+
+LSTDIRI=	libc liste printf printf/conversion
 
 ############################## normaly no change ###############################
 
@@ -46,24 +51,28 @@ CC = gcc
 CFLAGS = -I$(INCDIR) -Wall -Werror -Wextra
 MAKE = /usr/bin/make
 
+LSTDIR=	$(addprefix $(OBJDIR)/, $(LSTDIRI)) \
+
 ifneq ($(NAME), )
-all: $(NAME)
+all: objdir $(NAME)
 	@echo $(GREEN)"compilation reussi"$(NO_COLOR)
 else
-all: $(OBJ)
+all: objdir $(OBJ)
 	@echo $(GREEN)"compilation reussi"$(NO_COLOR)
 endif
 
-$(OBJDIR):
-	@mkdir $(OBJDIR)
+objdir:
+	@if ! [ -d $(OBJDIR) ]; then\
+		mkdir $(OBJDIR) $(LSTDIR);\
+	fi
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo $(GREEN)$@" compile"$(NO_COLOR)
 
 $(NAME): $(OBJ)
-	@ar r $(NAME) $(OBJ)
-	@ranlib $(NAME)
+	ar cr $(NAME) $(OBJ)
+	ranlib $(NAME)
 	@echo $(GREEN)"library compile"$(NO_COLOR)
 
 $(NAME)2: $(OBJ)
@@ -87,7 +96,7 @@ endif
 cl:
 	@if [ "test" = "test" ]; then\
 		echo "Hello world";\
-		fi
+	fi
 
 auteur:
 	@echo $(SPEUDO) > auteur
