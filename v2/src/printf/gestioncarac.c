@@ -37,3 +37,10 @@ void            stk_uni(unsigned int uni, t_data_printf *off)
 	else
 		add_chr(uni, off);
 }
+
+void		add_n_chr(unsigned int len, char c, t_data_printf *off)
+{
+	if (len > 0)
+		while(len--)
+			add_chr(c, off);
+}

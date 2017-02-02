@@ -13,9 +13,9 @@
 #include "printf.h"
 #include <stdint.h>
 
-void			itoabase(long int nb, char *b2, t_data_printf *off)
+void			add_itoabase(intmax_t nb, char *b2, t_data_printf *off)
 {
-	unsigned long int   tmp;
+	intmax_t   tmp;
 	size_t              size;
 	unsigned int        max;
 
@@ -27,10 +27,7 @@ void			itoabase(long int nb, char *b2, t_data_printf *off)
 	while (tmp /= max)
 		++size;
 	while (--size + 1)
-	{
-		add_chr(*(b2 + (nb % max)), off);
-		nb /= max;
-	}
+		add_chr(*(b2 + (nb / ft_power(max, size) % max)), off);
 }
 
 int             atoistr(char **s)
@@ -54,7 +51,7 @@ void            add_nbr_unsigned(unsigned int n, t_data_printf *off)
 		add_chr('0', off);
 		return ;
 	}
-	i = ft_intlen(n);
+	i = ft_intlen(n, "0123456789");
 	while (--i != -1)
 		add_chr('0' + n / ft_power(10, i) % 10, off);
 }
@@ -70,7 +67,7 @@ void            add_nbr(intmax_t n, t_data_printf *off)
 	}
 	if ((int)n > 0)
 		n = ~n + 1;
-	i = ft_intlen(n);
+	i = ft_intlen(n, "0123456789");
 	while (--i != -1)
 		add_chr('0' - (int)n / ft_power(10, i) % 10, off);
 }

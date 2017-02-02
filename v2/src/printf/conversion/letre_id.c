@@ -1,4 +1,5 @@
 #include "printf.h"
+#include "libft.h"
 #include <stdint.h>
 
 static intmax_t	resize(va_list va, t_flag *flag)
@@ -26,18 +27,44 @@ static intmax_t	resize(va_list va, t_flag *flag)
 char	letre_id(va_list va, t_data_printf *off, t_flag *flag)
 {
 	intmax_t	c;
+	char		*prefix;
+	unsigned int	sizeofnb;
+	unsigned int	sizeofspace;
 
 	(void)flag;
 	c = resize(va, flag);
+	sizeofnb = ft_intlen(c, "0123456789");
+	if (flag->width_set && !(flag->flagother & FLAG_MOIN) && flag->flagother & FLAG_ZERO)
+	{
+		if (flag->precision_set)
+			flag->precision = MAX(flag->width, flag->precision);
+		else
+			flag->precision = MAX(flag->width, sizeofnb);
+		flag->precision_set = 1;
+		flag->width_set = 0;
+	}
+	sizeofspace = sizeofnb;
+	if (flag->precision_set && flag->precision > sizeofnb)
+		sizeofspace = flag->precision;
+	prefix = "";
 	if (c < 0 || (flag->flagother) & FLAG_PLUS || (flag->flagother) & FLAG_SPACE)
 	{
 		if (c < 0)
-			add_chr('-', off);
+		{
+			c = ~c + 1;
+			prefix = "-";
+		}
 		else if ((flag->flagother) & FLAG_PLUS)
-			add_chr('+', off);
+			prefix = "+";
 		else if ((flag->flagother) & FLAG_SPACE)
-			add_chr(' ', off);
+			prefix = " ";
+		sizeofspace += ft_strlen(prefix);
 	}
-	add_nbr(c, off);
+	if (flag->width_set && !(flag->flagother & FLAG_MOIN))
+		add_n_chr(flag->width - sizeofspace, ' ', off);
+	add_str(prefix, off);
+	add_itoabase(c, "0123456789", off);
+	if (flag->width_set && flag->flagother & FLAG_MOIN)
+		add_n_chr(flag->width - sizeofspace, ' ', off);
 	return (0);
 }

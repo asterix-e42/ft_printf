@@ -16,52 +16,6 @@
 #include "libft.h"
 #include "printf.h"
 
-char		def_flag_type(va_list va, t_data_printf *off, t_flag *flag)
-{
-	(void)va;
-	(void)off;
-	if (*(flag->format) == 'l')
-		if (!((flag->flagtype) & FLAG_LONG))
-			(flag->flagtype) = FLAG_LONG;
-		else
-			(flag->flagtype) = FLAG_LONGLONG;
-	else if (*(flag->format) == 'h')
-		if (!((flag->flagtype) & FLAG_SHORT))
-			(flag->flagtype) = FLAG_SHORT;
-		else
-			(flag->flagtype) = FLAG_CHAR;
-	else if (*(flag->format) == 'j')
-		(flag->flagtype) = FLAG_MAX;
-	else if (*(flag->format) == 'z')
-		(flag->flagtype) = FLAG_SIZE_T;
-	else
-		ft_erreur("imposible\n");
-	++(flag->format);
-	return (1);
-}
-
-char		def_flag(va_list va, t_data_printf *off, t_flag *flag)
-{
-	(void)va;
-	(void)off;
-	if (*(flag->format) == '#')
-		(flag->flagother) |= FLAG_DIESE;
-	else if (*(flag->format) == '-')
-		(flag->flagother) |= FLAG_MOIN;
-	else if (*(flag->format) == '+')
-		(flag->flagother) |= FLAG_PLUS;
-	else if (*(flag->format) == ' ')
-		(flag->flagother) |= FLAG_SPACE;
-	else if (*(flag->format) == '0')
-		(flag->flagother) |= FLAG_ZERO;
-	else if (ft_isdigit(*(flag->format)))
-		(flag->flagother) |= FLAG_ZERO;
-	else
-		ft_erreur("imposibl\n");
-	++(flag->format);
-	return (1);
-}
-
 static int	debut(char *c, va_list va, t_data_printf *off)
 {
 	t_flag			*flag;
