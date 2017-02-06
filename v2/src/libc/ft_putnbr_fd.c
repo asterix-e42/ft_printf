@@ -32,7 +32,7 @@ void	ft_putnbr_fd(int n, int fd)
 		write(fd, "-", 1);
 		n = ~n + 1;
 	}
-	i = ft_intlen(n);
+	i = ft_intlen(n, "0123456789");
 	while (--i != -1)
 		ft_putchar_fd(n / ft_power(10, i) % 10 + '0', fd);
 }

@@ -30,6 +30,7 @@ LST =	lstadd.o lstnew.o lstdel.o lstdelone.o lstiter.o lstmap.o lstfind.o \
 		lstaddend.o	lstfindsize.o lstothernew.o 
 
 PRINT =	ft_printf.o unicorn.o new_data.o tabconv.o gestioncarac.o gestionnombre.o\
+		flag.o\
 		conversion/symbol.o conversion/letre_c.o conversion/letre_s.o\
 		conversion/letre_id.o conversion/letre_mdu.o conversion/letre_moo.o\
 		conversion/letre_mx.o	conversion/letre_p.o conversion/letre_s.o\
@@ -71,8 +72,8 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo $(GREEN)$@" compile"$(NO_COLOR)
 
 $(NAME): $(OBJ)
-	ar cr $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@ar cr $(NAME) $(OBJ)
+	@ranlib $(NAME)
 	@echo $(GREEN)"library compile"$(NO_COLOR)
 
 $(NAME)2: $(OBJ)

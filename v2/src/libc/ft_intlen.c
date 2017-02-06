@@ -10,15 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_intlen(int n)
+#include "libft.h"
+
+int		ft_intlen(int n, char *b)
 {
 	int		i;
+	int		sizeofbase;
 
-	i = 0;
-	while (n != 0)
-	{
-		n /= 10;
+	sizeofbase = ft_strlen(b);
+	i = 1;
+	while ((n /= sizeofbase))
 		++i;
-	}
 	return (i);
 }

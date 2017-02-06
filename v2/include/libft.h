@@ -23,7 +23,7 @@ typedef struct	s_list
 }				t_list;
 
 int				ft_isspace(int c);
-int				ft_intlen(int n);
+int				ft_intlen(int n, char *);
 int				ft_power(int n, int p);
 t_list			*ft_lstfind(const t_list *lst, void *data);
 t_list			*ft_lstfindsize(const t_list *lst, int data);

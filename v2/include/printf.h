@@ -31,6 +31,8 @@
 # define FLAG_MAX 16
 # define FLAG_SIZE_T 32
 
+#define MAX(nb1, nb2) (nb1 < nb2)?nb2:nb1
+
 typedef struct	s_data_printf
 {
 	int			size;
@@ -43,14 +45,19 @@ typedef struct	s_flag
 	char		*format;
 	char		flagtype;
 	char		flagother;
+	char		precision_set;
+	char		width_set;
 	unsigned int			precision;
 	unsigned int			width;
 }		t_flag;
 
 char			def_flag_type(va_list va, t_data_printf *off, t_flag *flag);
-int				sizeofbit(int);
 char			def_flag(va_list va, t_data_printf *off, t_flag *flag);
+char			def_width(va_list va, t_data_printf *off, t_flag *flag);
+char			def_precision(va_list va, t_data_printf *off, t_flag *flag);
+int				sizeofbit(int);
 void			add_chr(char c, t_data_printf *off);
+void			add_n_chr(unsigned int len, char c, t_data_printf *off);
 void			add_str(char *c, t_data_printf *off);
 void			stk_uni(unsigned int uni, t_data_printf *off);
 int				ft_printf(const char *format, ...);
